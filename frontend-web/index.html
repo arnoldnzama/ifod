@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFOD - Plateforme de Commerce Électronique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ========== HEADER ========== -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-shopping-bag"></i> IFOD
+            </a>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Rechercher des produits...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="home">Accueil</a></li>
+                    <li><a href="#" class="nav-link" data-page="products">Produits</a></li>
+                    <li><a href="#" class="nav-link" data-page="cart">Panier</a></li>
+                    <li id="authButtons">
+                        <a href="#" class="nav-link" data-page="login">Connexion</a>
+                        <a href="#" class="nav-link" data-page="register">Inscription</a>
+                    </li>
+                    <li id="userInfo" style="display: none;">
+                        <span id="userName"></span>
+                        <button id="logoutBtn" class="btn btn-link">Déconnexion</button>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="header-icons">
+                <span class="cart-icon" onclick="navigateTo('cart')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount" style="display: none;">0</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTENU PRINCIPAL ========== -->
+    <main class="container">
+        
+        <!-- PAGE: ACCUEIL -->
+        <section data-page-content="home" class="page-content active">
+            <div class="products-section">
+                <h1 class="section-title">🎁 Bienvenue sur IFOD</h1>
+                <p style="margin-bottom: 30px; color: #666;">
+                    Découvrez nos meilleures offres et promotions
+                </p>
+                <div class="products-grid" id="productsContainer">
+                    <!-- Les produits seront chargés ici -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: PRODUITS -->
+        <section data-page-content="products" class="page-content">
+            <div class="products-section">
+                <h1 class="section-title">📦 Tous les Produits</h1>
+                
+                <div style="margin-bottom: 20px;">
+                    <label>Filtrer par catégorie:</label>
+                    <select id="categoryFilter" onchange="loadProducts(1, this.value)" style="max-width: 250px;">
+                        <option value="">Toutes les catégories</option>
+                        <option value="1">Électronique</option>
+                        <option value="2">Vêtements</option>
+                        <option value="3">Alimentaire</option>
+                        <option value="4">Maison</option>
+                        <option value="5">Sports</option>
+                    </select>
+                </div>
+                
+                <div class="products-grid" id="productsContainer">
+                    <!-- Les produits seront chargés ici -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: PANIER -->
+        <section data-page-content="cart" class="page-content">
+            <h1 class="section-title">🛒 Mon Panier</h1>
+            <div class="cart-container">
+                <div id="cartItems">
+                    <!-- Les articles du panier seront chargés ici -->
+                </div>
+                <div class="cart-summary" id="cartSummary">
+                    <!-- Le résumé du panier sera affiché ici -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: CONNEXION -->
+        <section data-page-content="login" class="page-content">
+            <div style="max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h1 style="margin-bottom: 30px; text-align: center;">🔐 Connexion</h1>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe:</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Connexion</button>
+                </form>
+                <p style="text-align: center; margin-top: 15px;">
+                    Pas de compte? <a href="#" class="nav-link" data-page="register">S'inscrire</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- PAGE: INSCRIPTION -->
+        <section data-page-content="register" class="page-content">
+            <div style="max-width: 400px; margin: 30px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h1 style="margin-bottom: 30px; text-align: center;">📝 Inscription</h1>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label>Prénom:</label>
+                        <input type="text" id="registerFirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom:</label>
+                        <input type="text" id="registerLastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone:</label>
+                        <input type="tel" id="registerPhone">
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe:</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">S'inscrire</button>
+                </form>
+                <p style="text-align: center; margin-top: 15px;">
+                    Vous avez un compte? <a href="#" class="nav-link" data-page="login">Se connecter</a>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========== MODALE PRODUIT ========== -->
+    <div id="productModal" class="modal" onclick="if(event.target === this) closeProductModal()">
+        <!-- Le contenu du produit sera chargé ici -->
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>À Propos</h4>
+                <ul>
+                    <li><a href="#">Qui sommes-nous?</a></li>
+                    <li><a href="#">Notre histoire</a></li>
+                    <li><a href="#">Carrières</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Aide & Support</a></li>
+                    <li><a href="#">Contactez-nous</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Légal</h4>
+                <ul>
+                    <li><a href="#">Conditions d'utilisation</a></li>
+                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="#">Politique de retour</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Nous Suivre</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 IFOD. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
