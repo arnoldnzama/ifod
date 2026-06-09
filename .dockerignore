@@ -1,0 +1,8 @@
+**/node_modules
+**/vendor
+**/dist
+**/.git
+backend/.env
+frontend-web/.env
+**/storage/logs/*.log
+doc
